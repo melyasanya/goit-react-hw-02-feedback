@@ -1,9 +1,26 @@
-export const FeedbackOptions = ({ good, neutral, bad }) => {
+import PropTypes from 'prop-types';
+
+export const FeedbackOptions = ({ onLeaveFeedback, options }) => {
   return (
     <li style={{ display: 'flex', flexDirection: 'row', gap: '8px' }}>
-      <button onClick={good}>Good</button>
-      <button onClick={neutral}>Neutral</button>
-      <button onClick={bad}>Bad</button>
+      {options.map((el, i) => {
+        return (
+          <button
+            key={i}
+            name={el}
+            onClick={() => {
+              onLeaveFeedback(el);
+            }}
+          >
+            {el.charAt(0).toUpperCase() + el.slice(1)}
+          </button>
+        );
+      })}
     </li>
   );
+};
+
+FeedbackOptions.propTypes = {
+  onLeaveFeedback: PropTypes.func.isRequired,
+  options: PropTypes.arrayOf(PropTypes.string),
 };
